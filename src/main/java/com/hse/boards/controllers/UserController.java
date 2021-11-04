@@ -1,7 +1,7 @@
 package com.hse.boards.controllers;
 
 import com.hse.boards.models.User;
-import com.hse.boards.serices.UserService;
+import com.hse.boards.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
