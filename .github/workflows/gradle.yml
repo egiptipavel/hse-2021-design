@@ -22,7 +22,7 @@ jobs:
           distribution: 'adopt'
 
       - name: Build with Gradle
-        run: ./gradlew build
+        run:  ./gradlew assemble -x autoLintGradle
 
       - name: Run tests
         run: ./gradlew test
