@@ -31,6 +31,6 @@ jobs:
       run: ./gradlew test
 
     - name: Test Coverage
-        uses: codecov/codecov-action@v1
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }}
+      uses: codecov/codecov-action@v1
+      with:
+        gtoken: ${{ secrets.CODECOV_TOKEN }}g
