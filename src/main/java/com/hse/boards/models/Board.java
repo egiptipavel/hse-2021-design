@@ -11,17 +11,21 @@ import javax.persistence.*;
 @Table(name = "boards")
 public class Board {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Integer id;
 
     @Column(nullable = false)
-    public Integer ownerId;
+    public Integer userId;
+
+    @Column(nullable = false)
+    public Boolean admin;
 
     public Board() {
     }
 
-    public Board(Integer id, Integer ownerId) {
+    public Board(Integer id, Integer userId, Boolean admin) {
         this.id = id;
-        this.ownerId = ownerId;
+        this.userId = userId;
+        this.admin = admin;
     }
 }

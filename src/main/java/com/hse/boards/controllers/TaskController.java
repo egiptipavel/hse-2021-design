@@ -8,6 +8,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Controller
 @RequestMapping(path = "/api/tasks")
 public class TaskController {
@@ -24,10 +26,10 @@ public class TaskController {
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
-    @GetMapping(value = "/{id}")
-    public ResponseEntity<Task> getTaskById(@PathVariable("id") int id) {
-        return taskService.getTaskById(id)
-                .map(task -> new ResponseEntity<>(task, HttpStatus.OK))
+    @GetMapping(value = "/{boardId}")
+    public ResponseEntity<List<Task>> getBoardTasks(@PathVariable("boardId") int boardId) {
+        return taskService.getBoardTasks(boardId)
+                .map(tasks -> new ResponseEntity<>(tasks, HttpStatus.OK))
                 .orElse(new ResponseEntity<>(HttpStatus.BAD_REQUEST));
     }
 }
