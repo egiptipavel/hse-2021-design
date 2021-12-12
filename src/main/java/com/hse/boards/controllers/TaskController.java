@@ -5,6 +5,7 @@ import com.hse.boards.services.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,10 +27,21 @@ public class TaskController {
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
+    @PostMapping(value = "/{taskId}/{ownerId}")
+    public ResponseEntity<Void> setOwnerToTask(@PathVariable("taskId") long taskId,
+                                               @PathVariable("ownerId") long ownerId) {
+        taskService.setOwnerToTask(taskId, ownerId);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PostMapping(value = "/{taskId}")
+    public ResponseEntity<Void> setTaskForCheckingByOwner(@PathVariable("taskId") long taskId) {
+        taskService.setTaskForCheckingByOwner(taskId);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
     @GetMapping(value = "/{boardId}")
-    public ResponseEntity<List<Task>> getBoardTasks(@PathVariable("boardId") long boardId) {
-        return taskService.getBoardTasks(boardId)
-                .map(tasks -> new ResponseEntity<>(tasks, HttpStatus.OK))
-                .orElse(new ResponseEntity<>(HttpStatus.BAD_REQUEST));
+    public ResponseEntity<List<Task>> getAllBoardTasks(@PathVariable("boardId") long boardId) {
+        return new ResponseEntity<>(taskService.getAllBoardTasks(boardId), HttpStatus.OK);
     }
 }

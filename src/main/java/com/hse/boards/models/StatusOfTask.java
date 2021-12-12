@@ -1,8 +1,8 @@
 package com.hse.boards.models;
 
-enum StatusOfTask {
+public enum StatusOfTask {
     OPEN,
-    READY,
     FOR_CHECKING,
+    DONE,
     CLOSED
 }
