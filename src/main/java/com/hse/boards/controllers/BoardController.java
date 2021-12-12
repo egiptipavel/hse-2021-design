@@ -1,5 +1,6 @@
 package com.hse.boards.controllers;
 
+import com.hse.boards.models.Board;
 import com.hse.boards.services.BoardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -24,8 +25,8 @@ public class BoardController {
     }
 
     @PostMapping(value = "/")
-    public ResponseEntity<String> createBoard() {
-        boardService.createBoard();
+    public ResponseEntity<String> createBoard(Board board) {
+        boardService.createBoard(board);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
@@ -37,9 +38,9 @@ public class BoardController {
                 .orElse(new ResponseEntity<>(List.of(), HttpStatus.OK));
     }
 
-    @PostMapping(value = "/{board_id}/admin/{user_id}")
-    public ResponseEntity<Void> setAdmin(@PathVariable("board_id") int board_id, @PathVariable("user_id") int user_id) {
-        boardService.setAdmin(board_id, user_id);
+    @PostMapping(value = "/{boardId}/admin/{userId}")
+    public ResponseEntity<Void> setAdmin(@PathVariable("boardId") int boardId, @PathVariable("userId") int userId) {
+        boardService.setAdmin(boardId, userId);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }

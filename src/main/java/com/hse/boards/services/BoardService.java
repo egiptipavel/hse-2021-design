@@ -2,8 +2,10 @@ package com.hse.boards.services;
 
 import com.hse.boards.exceptions.ServiceException;
 import com.hse.boards.models.Board;
+import com.hse.boards.models.BoardToUser;
 import com.hse.boards.models.User;
 import com.hse.boards.repositories.BoardRepository;
+import com.hse.boards.repositories.BoardToUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -17,21 +19,27 @@ import java.util.Optional;
 public class BoardService {
     private final BoardRepository boardRepository;
 
+    private final BoardToUserRepository boardToUserRepository;
+
     @Autowired
-    public BoardService(BoardRepository boardRepository) {
+    public BoardService(BoardRepository boardRepository, BoardToUserRepository boardToUserRepository) {
         this.boardRepository = boardRepository;
+        this.boardToUserRepository = boardToUserRepository;
     }
 
     @Transactional
-    public void createBoard() {
+    public void createBoard(Board board) {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Board board = new Board(null, user.id, true);
-        boardRepository.save(board);
+        board.id = null;
+        Board savedBoard = boardRepository.save(board);
+        boardToUserRepository.save(new BoardToUser(null, savedBoard.id, user.id, true));
     }
 
     @Transactional
-    public Optional<Board> getBoardByIdAndUserId(int id, int userId) {
-        return boardRepository.findByIdAndUserId(id, userId);
+    public Board getBoardById(int boardId) {
+        return boardRepository.findById(boardId)
+                .orElseThrow(() -> new ServiceException(HttpStatus.NOT_FOUND,
+                        "Board with such id does not exist or user is not a member of this board."));
     }
 
     @Transactional
@@ -41,20 +49,26 @@ public class BoardService {
     }
 
     @Transactional
-    public void setAdmin(int board_id, int user_id) {
+    public Optional<BoardToUser> getBoardToUserByBoardIdAndUserId(Integer boardId, Integer userId) {
+        return boardToUserRepository.findByBoardIdAndUserId(boardId, userId);
+    }
+
+    @Transactional
+    public void setAdmin(int boardId, int userId) {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Board board = getBoardByIdAndUserId(board_id, user.id).orElseThrow(
-                () -> new ServiceException(HttpStatus.NOT_FOUND,
+        BoardToUser boardToUser = getBoardToUserByBoardIdAndUserId(boardId, user.id)
+                .orElseThrow(() -> new ServiceException(HttpStatus.NOT_FOUND,
                         "Board with such id does not exist or user is not a member of this board."));
-        if (!board.admin) {
+        if (!boardToUser.admin) {
             throw new ServiceException(HttpStatus.BAD_REQUEST, "User is not an admin of this board");
         }
-        board = getBoardByIdAndUserId(board_id, user_id).orElseThrow(
-                () -> new ServiceException(HttpStatus.NOT_FOUND, "Given user is not a member of this board."));
-        if (board.admin) {
+        boardToUser = getBoardToUserByBoardIdAndUserId(boardId, userId)
+                .orElseThrow(() -> new ServiceException(HttpStatus.NOT_FOUND,
+                        "This user is not a member of this board."));
+        if (boardToUser.admin) {
             throw new ServiceException(HttpStatus.BAD_REQUEST, "Given user is already admin of this board.");
         }
-        board.admin = true;
-        boardRepository.save(board);
+        boardToUser.admin = true;
+        boardToUserRepository.save(boardToUser);
     }
 }

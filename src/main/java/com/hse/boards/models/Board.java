@@ -15,17 +15,17 @@ public class Board {
     public Integer id;
 
     @Column(nullable = false)
-    public Integer userId;
+    public String name;
 
-    @Column(nullable = false)
-    public Boolean admin;
+    @Column
+    public String description;
 
     public Board() {
     }
 
-    public Board(Integer id, Integer userId, Boolean admin) {
+    public Board(Integer id, String name, String description) {
         this.id = id;
-        this.userId = userId;
-        this.admin = admin;
+        this.name = name;
+        this.description = description;
     }
 }

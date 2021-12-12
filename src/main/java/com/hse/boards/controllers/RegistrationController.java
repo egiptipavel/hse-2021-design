@@ -1,5 +1,6 @@
 package com.hse.boards.controllers;
 
+import com.hse.boards.models.Board;
 import com.hse.boards.models.User;
 import com.hse.boards.security.JwtProvider;
 import com.hse.boards.services.BoardService;
@@ -31,7 +32,7 @@ public class RegistrationController {
     @PostMapping(value = "/reg")
     public ResponseEntity<Void> registration(@RequestBody User user) {
         user = userService.createUser(user);
-        boardService.createBoard();
+        boardService.createBoard(new Board(null, "Your board", null));
         return ResponseEntity.ok()
                 .header(HttpHeaders.AUTHORIZATION, jwtProvider.generateToken(user.login))
                 .build();

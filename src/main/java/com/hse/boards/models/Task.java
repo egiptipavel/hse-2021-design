@@ -6,13 +6,6 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.sql.Timestamp;
 
-enum Status {
-    OPEN,
-    READY,
-    FOR_CHECKING,
-    CLOSED
-}
-
 @Getter
 @Setter
 @Entity
@@ -26,6 +19,12 @@ public class Task {
     public Integer boardId;
 
     @Column(nullable = false)
+    public Integer creatorId;
+
+    @Column
+    public Integer ownerId;
+
+    @Column(nullable = false)
     public String name;
 
     public String description;
@@ -34,14 +33,17 @@ public class Task {
     public Timestamp deadline;
 
     @Column
-    public Status status;
+    public StatusOfTask status;
 
     public Task() {
     }
 
-    public Task(Integer id, Integer boardId, String name, String description, Timestamp deadline, Status status) {
+    public Task(Integer id, Integer boardId, Integer creatorId, Integer ownerId, String name, String description,
+                Timestamp deadline, StatusOfTask status) {
         this.id = id;
         this.boardId = boardId;
+        this.creatorId = creatorId;
+        this.ownerId = ownerId;
         this.name = name;
         this.description = description;
         this.deadline = deadline;

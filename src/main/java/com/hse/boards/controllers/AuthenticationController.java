@@ -1,9 +1,9 @@
 package com.hse.boards.controllers;
 
+import com.hse.boards.models.User;
 import com.hse.boards.security.JwtProvider;
 import com.hse.boards.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,9 +25,7 @@ public class AuthenticationController {
 
     @GetMapping(value = "/auth")
     public ResponseEntity<String> authentication(@RequestParam String login, @RequestParam String password) {
-        return userService.getUserByLoginAndPassword(login, password)
-                .map(user -> ResponseEntity.ok()
-                        .body(jwtProvider.generateToken(user.login)))
-                .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+        User user = userService.getUserByLoginAndPassword(login, password);
+        return ResponseEntity.ok().body(jwtProvider.generateToken(user.login));
     }
 }
