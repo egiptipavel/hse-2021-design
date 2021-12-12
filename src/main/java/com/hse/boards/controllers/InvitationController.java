@@ -1,11 +1,14 @@
 package com.hse.boards.controllers;
 
+import com.hse.boards.models.Invitation;
 import com.hse.boards.services.AnswerOnInvitation;
 import com.hse.boards.services.InvitationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/invitations")
@@ -22,6 +25,16 @@ public class InvitationController {
                                               @PathVariable("userId") long userId) {
         invitationService.inviteToBoard(userId, boardId);
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/")
+    public ResponseEntity<List<Invitation>> getAllUserInvitations() {
+        return new ResponseEntity<>(invitationService.getAllUserInvitations(), HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/my")
+    public ResponseEntity<List<Invitation>> getAllInvitationsFromUser() {
+        return new ResponseEntity<>(invitationService.getAllInvitationsFromUser(), HttpStatus.OK);
     }
 
     @PostMapping(value = "/{id}")

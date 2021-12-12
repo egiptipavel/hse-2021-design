@@ -36,12 +36,12 @@ public class InvitationService {
         return invitationRepository.findInvitationByRecipientIdAndBoardId(recipientId, boardId);
     }
 
-    public Optional<List<Invitation>> getAllUserInvitations() {
+    public List<Invitation> getAllUserInvitations() {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         return invitationRepository.findInvitationsByRecipientId(user.id);
     }
 
-    public Optional<List<Invitation>> getAllInvitationsFromUser() {
+    public List<Invitation> getAllInvitationsFromUser() {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         return invitationRepository.findInvitationsByInviterId(user.id);
     }

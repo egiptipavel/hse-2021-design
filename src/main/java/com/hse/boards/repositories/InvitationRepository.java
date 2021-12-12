@@ -9,7 +9,7 @@ import java.util.Optional;
 public interface InvitationRepository extends CrudRepository<Invitation, Long> {
     Optional<Invitation> findInvitationByRecipientIdAndBoardId(long recipientId, long boardId);
 
-    Optional<List<Invitation>> findInvitationsByRecipientId(long recipientId);
+    List<Invitation> findInvitationsByRecipientId(long recipientId);
 
-    Optional<List<Invitation>> findInvitationsByInviterId(long inviterId);
+    List<Invitation> findInvitationsByInviterId(long inviterId);
 }
