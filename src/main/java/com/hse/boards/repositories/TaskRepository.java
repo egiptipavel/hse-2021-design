@@ -8,6 +8,6 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface TaskRepository extends CrudRepository<Task, Integer> {
-    Optional<List<Task>> findAllByBoardId(Integer boardId);
+public interface TaskRepository extends CrudRepository<Task, Long> {
+    Optional<List<Task>> findTasksByBoardId(long boardId);
 }

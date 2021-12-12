@@ -36,7 +36,12 @@ public class BoardService {
     }
 
     @Transactional
-    public Board getBoardById(int boardId) {
+    public void addUserToBoard(long userId, long boardId) {
+        boardToUserRepository.save(new BoardToUser(null, boardId, userId, false));
+    }
+
+    @Transactional
+    public Board getBoardById(long boardId) {
         return boardRepository.findById(boardId)
                 .orElseThrow(() -> new ServiceException(HttpStatus.NOT_FOUND,
                         "Board with such id does not exist or user is not a member of this board."));
@@ -49,12 +54,12 @@ public class BoardService {
     }
 
     @Transactional
-    public Optional<BoardToUser> getBoardToUserByBoardIdAndUserId(Integer boardId, Integer userId) {
-        return boardToUserRepository.findByBoardIdAndUserId(boardId, userId);
+    public Optional<BoardToUser> getBoardToUserByBoardIdAndUserId(long boardId, long userId) {
+        return boardToUserRepository.findBoardsByBoardIdAndUserId(boardId, userId);
     }
 
     @Transactional
-    public void setAdmin(int boardId, int userId) {
+    public void setAdmin(long boardId, long userId) {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         BoardToUser boardToUser = getBoardToUserByBoardIdAndUserId(boardId, user.id)
                 .orElseThrow(() -> new ServiceException(HttpStatus.NOT_FOUND,

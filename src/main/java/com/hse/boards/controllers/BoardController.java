@@ -31,7 +31,7 @@ public class BoardController {
     }
 
     @GetMapping(value = "/")
-    public ResponseEntity<List<Integer>> getBoards() {
+    public ResponseEntity<List<Long>> getBoards() {
         return boardService.getBoards()
                 .map(boards -> new ResponseEntity<>(boards.stream().map(board -> board.id).collect(Collectors.toList()),
                         HttpStatus.OK))
@@ -39,7 +39,7 @@ public class BoardController {
     }
 
     @PostMapping(value = "/{boardId}/admin/{userId}")
-    public ResponseEntity<Void> setAdmin(@PathVariable("boardId") int boardId, @PathVariable("userId") int userId) {
+    public ResponseEntity<Void> setAdmin(@PathVariable("boardId") long boardId, @PathVariable("userId") long userId) {
         boardService.setAdmin(boardId, userId);
         return new ResponseEntity<>(HttpStatus.OK);
     }

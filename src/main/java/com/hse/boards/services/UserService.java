@@ -34,7 +34,7 @@ public class UserService {
     }
 
     @Transactional
-    public User getUserById(int id) {
+    public User getUserById(long id) {
         return userRepository.findById(id)
                 .orElseThrow(() -> new ServiceException(HttpStatus.NOT_FOUND, "User with such id dost not exist"));
     }

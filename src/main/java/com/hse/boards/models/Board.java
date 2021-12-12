@@ -12,7 +12,7 @@ import javax.persistence.*;
 public class Board {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public Integer id;
+    public Long id;
 
     @Column(nullable = false)
     public String name;
@@ -23,7 +23,7 @@ public class Board {
     public Board() {
     }
 
-    public Board(Integer id, String name, String description) {
+    public Board(Long id, String name, String description) {
         this.id = id;
         this.name = name;
         this.description = description;

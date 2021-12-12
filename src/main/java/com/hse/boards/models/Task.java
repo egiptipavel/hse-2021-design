@@ -13,16 +13,16 @@ import java.sql.Timestamp;
 public class Task {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public Integer id;
+    public Long id;
 
     @Column(nullable = false)
-    public Integer boardId;
+    public Long boardId;
 
     @Column(nullable = false)
-    public Integer creatorId;
+    public Long creatorId;
 
     @Column
-    public Integer ownerId;
+    public Long ownerId;
 
     @Column(nullable = false)
     public String name;
@@ -38,7 +38,7 @@ public class Task {
     public Task() {
     }
 
-    public Task(Integer id, Integer boardId, Integer creatorId, Integer ownerId, String name, String description,
+    public Task(Long id, Long boardId, Long creatorId, Long ownerId, String name, String description,
                 Timestamp deadline, StatusOfTask status) {
         this.id = id;
         this.boardId = boardId;

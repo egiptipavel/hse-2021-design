@@ -27,7 +27,7 @@ public class TaskController {
     }
 
     @GetMapping(value = "/{boardId}")
-    public ResponseEntity<List<Task>> getBoardTasks(@PathVariable("boardId") int boardId) {
+    public ResponseEntity<List<Task>> getBoardTasks(@PathVariable("boardId") long boardId) {
         return taskService.getBoardTasks(boardId)
                 .map(tasks -> new ResponseEntity<>(tasks, HttpStatus.OK))
                 .orElse(new ResponseEntity<>(HttpStatus.BAD_REQUEST));

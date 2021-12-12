@@ -40,9 +40,9 @@ public class TaskService {
     }
 
     @Transactional
-    public Optional<List<Task>> getBoardTasks(int boardId) {
+    public Optional<List<Task>> getBoardTasks(long boardId) {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         boardService.getBoardToUserByBoardIdAndUserId(boardId, user.id);
-        return taskRepository.findAllByBoardId(boardId);
+        return taskRepository.findTasksByBoardId(boardId);
     }
 }

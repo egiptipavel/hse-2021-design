@@ -7,13 +7,13 @@ import javax.persistence.*;
 public class BoardToUser {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public Integer id;
+    public Long id;
 
     @Column(nullable = false)
-    public Integer boardId;
+    public Long boardId;
 
     @Column(nullable = false)
-    public Integer userId;
+    public Long userId;
 
     @Column(nullable = false)
     public Boolean admin;
@@ -21,7 +21,7 @@ public class BoardToUser {
     public BoardToUser() {
     }
 
-    public BoardToUser(Integer id, Integer boardId, Integer userId, Boolean admin) {
+    public BoardToUser(Long id, Long boardId, Long userId, Boolean admin) {
         this.id = id;
         this.boardId = boardId;
         this.userId = userId;

@@ -12,16 +12,16 @@ import javax.persistence.*;
 public class Invitation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public Integer id;
+    public Long id;
 
     @Column(nullable = false)
-    public Integer inviterId;
+    public Long inviterId;
 
     @Column(nullable = false)
-    public Integer recipientId;
+    public Long recipientId;
 
     @Column(nullable = false)
-    public Integer boardId;
+    public Long boardId;
 
     @Column(nullable = false)
     public StatusOfInvitation status;
@@ -29,7 +29,7 @@ public class Invitation {
     public Invitation() {
     }
 
-    public Invitation(Integer id, Integer inviterId, Integer recipientId, Integer boardId, StatusOfInvitation status) {
+    public Invitation(Long id, Long inviterId, Long recipientId, Long boardId, StatusOfInvitation status) {
         this.id = id;
         this.inviterId = inviterId;
         this.recipientId = recipientId;
