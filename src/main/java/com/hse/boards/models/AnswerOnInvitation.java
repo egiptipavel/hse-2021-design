@@ -1,4 +1,4 @@
-package com.hse.boards.services;
+package com.hse.boards.models;
 
 public enum AnswerOnInvitation {
     ACCEPT, REJECT

@@ -1,10 +1,7 @@
 package com.hse.boards.services;
 
 import com.hse.boards.exceptions.ServiceException;
-import com.hse.boards.models.BoardToUser;
-import com.hse.boards.models.Invitation;
-import com.hse.boards.models.StatusOfInvitation;
-import com.hse.boards.models.User;
+import com.hse.boards.models.*;
 import com.hse.boards.repositories.InvitationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

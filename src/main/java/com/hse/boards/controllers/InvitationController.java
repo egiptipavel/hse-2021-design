@@ -1,7 +1,7 @@
 package com.hse.boards.controllers;
 
 import com.hse.boards.models.Invitation;
-import com.hse.boards.services.AnswerOnInvitation;
+import com.hse.boards.models.AnswerOnInvitation;
 import com.hse.boards.services.InvitationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
