@@ -6,10 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -25,17 +22,15 @@ public class BoardController {
     }
 
     @PostMapping(value = "/")
-    public ResponseEntity<String> createBoard(Board board) {
+    public ResponseEntity<String> createBoard(@RequestBody Board board) {
         boardService.createBoard(board);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @GetMapping(value = "/")
     public ResponseEntity<List<Long>> getBoards() {
-        return boardService.getBoards()
-                .map(boards -> new ResponseEntity<>(boards.stream().map(board -> board.id).collect(Collectors.toList()),
-                        HttpStatus.OK))
-                .orElse(new ResponseEntity<>(List.of(), HttpStatus.OK));
+        return new ResponseEntity<>(boardService.getBoards().stream().map(board -> board.id).collect(Collectors.toList()),
+                HttpStatus.OK);
     }
 
     @PostMapping(value = "/{boardId}/admin/{userId}")

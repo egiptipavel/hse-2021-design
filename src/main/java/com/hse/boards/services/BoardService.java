@@ -14,6 +14,7 @@ import org.springframework.stereotype.Component;
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Component("BoardService")
 public class BoardService {
@@ -48,9 +49,12 @@ public class BoardService {
     }
 
     @Transactional
-    public Optional<List<Board>> getBoards() {
+    public List<Board> getBoards() {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        return boardRepository.findAllByUserId(user.id);
+        return boardToUserRepository.findBoardsToUserByUserId(user.id).stream()
+                .map(boardToUser -> boardRepository.findById(boardToUser.boardId)
+                        .orElseThrow(() -> new ServiceException(HttpStatus.BAD_REQUEST, "Board with such id does not exist")))
+                .collect(Collectors.toList());
     }
 
     @Transactional

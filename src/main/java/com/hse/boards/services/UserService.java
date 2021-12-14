@@ -23,6 +23,9 @@ public class UserService {
     @Transactional
     public User createUser(User user) {
         user.id = null;
+        if (userRepository.findUserByLogin(user.login).isPresent()) {
+            throw new ServiceException(HttpStatus.BAD_REQUEST, "User with this login already exists");
+        }
         user = userRepository.save(user);
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
                 user,
