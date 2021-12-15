@@ -60,3 +60,10 @@ apply plugin: 'nebula.lint'
 autoLintGradle {
     gradleLint.rules = ['all-dependency']
 }
+
+apply plugin: 'application'
+mainClassName = 'com.hse.boards.Main'
+
+run {
+    standardInput = System.in
+}
