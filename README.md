@@ -1,12 +1,12 @@
-#Build and run
+# Build and run
 ```
 docker compose build
 docker compose up -d
 ./gradlew :run -q --console=plain
 ```
 
-#App
+# App
 http://localhost:8080/api
 
-#Swagger
+# Swagger
 http://localhost:8080/swagger-ui.html
